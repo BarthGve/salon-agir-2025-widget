@@ -723,9 +723,7 @@
         const clientDomains = {
             // Secteur public
             'edf': 'edf.fr',
-            'sncf': 'sncf.com',
             'ratp': 'ratp.fr',
-            'la poste': 'laposte.fr',
             'la banque postale': 'labanquepostale.fr',
             'banque postale': 'labanquepostale.fr',
             'engie': 'engie.com',
@@ -798,6 +796,12 @@
             'google': 'google.com',
             'amazon': 'amazon.com',
             'salesforce': 'salesforce.com',
+        };
+
+        // Logos non disponibles sur Clearbit → URLs directes (Wikipedia/officiels)
+        const directLogos = {
+            'sncf': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo_SNCF_%282011%29.svg/200px-Logo_SNCF_%282011%29.svg.png',
+            'la poste': 'https://upload.wikimedia.org/wikipedia/fr/thumb/4/4e/Logo_La_Poste_%282018%29.svg/200px-Logo_La_Poste_%282018%29.svg.png',
         };
 
         // Fonction pour obtenir le logo via Clearbit
@@ -1006,7 +1010,13 @@
 
         function getClientLogo(clientName) {
             const nameLower = clientName.toLowerCase().trim();
-            // Chercher dans le mapping des domaines
+            // D'abord chercher dans les logos directs (non Clearbit)
+            for (const [key, url] of Object.entries(directLogos)) {
+                if (nameLower.includes(key) || key.includes(nameLower)) {
+                    return url;
+                }
+            }
+            // Sinon chercher dans le mapping des domaines Clearbit
             for (const [key, domain] of Object.entries(clientDomains)) {
                 if (nameLower.includes(key) || key.includes(nameLower)) {
                     return getClearbitLogo(domain);
