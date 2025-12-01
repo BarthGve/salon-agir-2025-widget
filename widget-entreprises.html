@@ -4,22 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fiches Entreprises - Salon Agir 2025</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --gradient-warning: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            --bg-dark: #0f0f1a;
-            --bg-card: rgba(255, 255, 255, 0.05);
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --shadow-hover: 0 12px 48px rgba(102, 126, 234, 0.4);
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --bg-tertiary: #fbfbfd;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-tertiary: #6e6e73;
+            --accent-blue: #0071e3;
+            --accent-blue-hover: #0077ed;
+            --border-light: rgba(0, 0, 0, 0.06);
+            --border-medium: rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         * {
@@ -29,460 +34,683 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-dark);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            background: var(--bg-secondary);
             color: var(--text-primary);
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .background-effects {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        .blob-1 {
-            width: 400px;
-            height: 400px;
-            background: var(--gradient-primary);
-            top: -100px;
-            right: -100px;
-        }
-
-        .blob-2 {
-            width: 300px;
-            height: 300px;
-            background: var(--gradient-secondary);
-            bottom: -50px;
-            left: -50px;
-            animation-delay: -5s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 40px 24px;
         }
 
-        header {
+        /* Header minimaliste */
+        .header {
             text-align: center;
-            padding: 40px 20px;
-            margin-bottom: 30px;
+            margin-bottom: 48px;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        header p {
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-primary);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
         }
 
-        .company-selector {
+        .header-badge i {
+            color: var(--accent-blue);
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 21px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Selecteur entreprise - Style Apple */
+        .selector-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 40px;
+            margin-bottom: 48px;
         }
 
         .selector-wrapper {
             position: relative;
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
         }
 
-        .selector-wrapper i {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-        }
-
-        select {
+        .selector-wrapper select {
             width: 100%;
-            padding: 18px 20px 18px 50px;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            background: var(--bg-card);
+            padding: 16px 48px 16px 20px;
+            font-size: 17px;
+            font-family: inherit;
+            font-weight: 500;
+            border: none;
+            border-radius: 12px;
+            background: var(--bg-primary);
             color: var(--text-primary);
             cursor: pointer;
             appearance: none;
-            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
         }
 
-        select:hover, select:focus {
-            border-color: #667eea;
-            box-shadow: var(--shadow-hover);
+        .selector-wrapper select:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .selector-wrapper select:focus {
             outline: none;
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2), var(--shadow-lg);
         }
 
-        .selector-arrow {
+        .selector-wrapper::after {
+            content: '';
             position: absolute;
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-secondary);
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid var(--text-secondary);
+            border-bottom: 2px solid var(--text-secondary);
+            transform: translateY(-60%) rotate(45deg);
             pointer-events: none;
         }
 
-        .company-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow);
-            animation: fadeIn 0.5s ease;
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 120px 40px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .company-header {
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 30px;
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid var(--border-color);
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .empty-state-icon i {
+            font-size: 32px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            font-size: 17px;
+        }
+
+        /* Company Card - Hero Section */
+        .company-hero {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: 48px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .company-hero-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
         }
 
         .company-logo {
-            width: 100px;
-            height: 100px;
-            border-radius: 20px;
-            background: var(--gradient-primary);
+            width: 96px;
+            height: 96px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             flex-shrink: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
         }
 
         .company-logo img {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .company-logo .placeholder {
-            font-size: 2.5rem;
+        .company-logo .initials {
+            font-size: 32px;
             font-weight: 700;
             color: white;
+            letter-spacing: -0.02em;
         }
 
-        .company-info h2 {
-            font-size: 2rem;
-            font-weight: 700;
+        .company-main-info {
+            flex: 1;
+        }
+
+        .company-name {
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
             margin-bottom: 8px;
+            line-height: 1.1;
         }
 
-        .company-info .sector {
+        .company-sector {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-secondary);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            margin-bottom: 20px;
+        }
+
+        .company-description {
+            font-size: 19px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 700px;
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        /* Links Bar */
+        .links-bar {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .link-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--gradient-success);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            padding: 12px 20px;
+            background: var(--accent-blue);
             color: white;
-        }
-
-        .company-meta {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .meta-item {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .meta-item:hover {
-            transform: translateY(-4px);
-            border-color: #667eea;
-        }
-
-        .meta-item .label {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .meta-item .value {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .meta-item .value a {
-            color: #667eea;
             text-decoration: none;
-            transition: color 0.3s ease;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
         }
 
-        .meta-item .value a:hover {
-            color: #f093fb;
+        .link-btn:hover {
+            background: var(--accent-blue-hover);
+            transform: scale(1.02);
         }
 
-        .description-section {
-            background: rgba(102, 126, 234, 0.1);
-            padding: 25px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            border-left: 4px solid #667eea;
+        .link-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
         }
 
-        .description-section h3 {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .link-btn.secondary:hover {
+            background: var(--border-medium);
         }
 
-        .description-section p {
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        .sections-grid {
+        /* Content Grid */
+        .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
         }
 
-        .section {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-
-        .section-header {
-            padding: 20px 25px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s ease;
-        }
-
-        .section-header:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .section-header h3 {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .section-header .icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-
-        .section-header .icon.solutions { background: var(--gradient-primary); }
-        .section-header .icon.clients { background: var(--gradient-success); }
-        .section-header .icon.investors { background: var(--gradient-warning); }
-        .section-header .icon.expertise { background: var(--gradient-secondary); }
-        .section-header .icon.linkedin { background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%); }
-
-        .section-header .toggle {
-            color: var(--text-secondary);
-            transition: transform 0.3s ease;
-        }
-
-        .section.open .section-header .toggle {
-            transform: rotate(180deg);
-        }
-
-        .section-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .section.open .section-content {
-            max-height: 1000px;
-        }
-
-        .section-inner {
-            padding: 0 25px 25px;
-        }
-
-        .item-card {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border-color);
-        }
-
-        .item-card:last-child {
-            margin-bottom: 0;
-        }
-
-        .item-card .item-title {
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #667eea;
-        }
-
-        .item-card .item-desc {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        .item-card .item-meta {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-
-        .item-card .tag {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 6px;
-            background: rgba(102, 126, 234, 0.2);
-            color: #a0a0ff;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 60px;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid var(--border-color);
-            border-top-color: #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.8rem;
-            }
-
-            .company-header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .company-card {
-                padding: 25px;
-            }
-
-            .sections-grid {
+        @media (max-width: 900px) {
+            .content-grid {
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Section Card */
+        .section-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .section-icon.blue { background: #e8f4fd; color: #0071e3; }
+        .section-icon.green { background: #e3f8e8; color: #34c759; }
+        .section-icon.orange { background: #fff4e6; color: #ff9500; }
+        .section-icon.purple { background: #f3e8ff; color: #af52de; }
+        .section-icon.pink { background: #ffe8f0; color: #ff2d55; }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Solution Items */
+        .solution-item {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .solution-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .solution-item:first-child {
+            padding-top: 0;
+        }
+
+        .solution-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .solution-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .solution-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 12px;
+            padding: 4px 10px;
+            background: var(--bg-secondary);
+            color: var(--text-tertiary);
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .tag.blue {
+            background: #e8f4fd;
+            color: #0071e3;
+        }
+
+        /* Client Logos Grid */
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
+
+        .client-card {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .client-card:hover {
+            border-color: var(--border-medium);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .client-logo-wrapper {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .client-logo-wrapper img {
+            max-width: 48px;
+            max-height: 48px;
+            object-fit: contain;
+        }
+
+        .client-logo-wrapper .client-initials {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .client-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .client-project {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* Investor Items */
+        .investor-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .investor-item:last-child {
+            border-bottom: none;
+        }
+
+        .investor-info {
+            flex: 1;
+        }
+
+        .investor-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .investor-type {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .investor-amount {
+            text-align: right;
+        }
+
+        .investor-amount .amount {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .investor-amount .date {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Expertise Cards */
+        .expertise-item {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 12px;
+        }
+
+        .expertise-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .expertise-domain {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .expertise-tech {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .expertise-certif {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #34c759;
+            font-weight: 500;
+        }
+
+        /* E-Reputation Card */
+        .reputation-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            color: white;
+        }
+
+        .reputation-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .reputation-header i {
+            font-size: 24px;
+        }
+
+        .reputation-header span {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .reputation-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .rep-stat {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .rep-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .rep-stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .reputation-text {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .reputation-text strong {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px 16px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .company-hero {
+                padding: 24px;
+            }
+
+            .company-hero-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .company-name {
+                font-size: 28px;
+            }
+
+            .company-description {
+                font-size: 16px;
+            }
+
+            .section-card {
+                padding: 24px;
+            }
+
+            .quick-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .links-bar {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
-    <div class="background-effects">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-    </div>
-
     <div class="container">
-        <header>
-            <h1><i class="fas fa-rocket"></i> Salon Agir 2025</h1>
-            <p>Fiches entreprises IA - Montrouge</p>
-        </header>
+        <div class="header">
+            <div class="header-badge">
+                <i class="fas fa-microchip"></i>
+                Salon Agir 2025 • Montrouge
+            </div>
+            <h1>Entreprises IA</h1>
+            <p>Découvrez les solutions innovantes</p>
+        </div>
 
-        <div class="company-selector">
+        <div class="selector-container">
             <div class="selector-wrapper">
-                <i class="fas fa-building"></i>
                 <select id="companySelect">
-                    <option value="">Selectionnez une entreprise...</option>
+                    <option value="">Choisir une entreprise...</option>
                 </select>
-                <i class="fas fa-chevron-down selector-arrow"></i>
             </div>
         </div>
 
         <div id="companyContent">
             <div class="empty-state">
-                <i class="fas fa-hand-pointer"></i>
-                <h3>Selectionnez une entreprise</h3>
-                <p>Choisissez une entreprise dans la liste pour voir sa fiche complete</p>
+                <div class="empty-state-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h3>Sélectionnez une entreprise</h3>
+                <p>Choisissez dans la liste pour voir le profil complet</p>
             </div>
         </div>
     </div>
 
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
     <script>
-        // Donnees des entreprises
+        // Données
         let entreprises = [];
         let solutions = [];
         let clients = [];
@@ -490,18 +718,47 @@
         let expertises = [];
         let linkedinInsights = [];
 
-        // Configuration Grist
+        // Logos des clients connus (mapping)
+        const clientLogos = {
+            'atout france': 'https://www.atout-france.fr/sites/default/files/logo.png',
+            'ministère des armées': 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/85/Minist%C3%A8re_des_Arm%C3%A9es_%28depuis_2020%29.svg/200px-Minist%C3%A8re_des_Arm%C3%A9es_%28depuis_2020%29.svg.png',
+            'ministère de l\'intérieur': 'https://upload.wikimedia.org/wikipedia/fr/thumb/2/29/Minist%C3%A8re_de_l%27Int%C3%A9rieur_%28France%29.svg/200px-Minist%C3%A8re_de_l%27Int%C3%A9rieur_%28France%29.svg.png',
+            'irsn': 'https://upload.wikimedia.org/wikipedia/fr/thumb/d/d3/Logo_IRSN.svg/200px-Logo_IRSN.svg.png',
+            'ratp': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/RATP_2019.svg/200px-RATP_2019.svg.png',
+            'sncf': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo_SNCF_%282011%29.svg/200px-Logo_SNCF_%282011%29.svg.png',
+            'edf': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Logo_EDF_2022.svg/200px-Logo_EDF_2022.svg.png',
+            'la poste': 'https://upload.wikimedia.org/wikipedia/fr/thumb/4/4e/Logo_La_Poste_%282018%29.svg/200px-Logo_La_Poste_%282018%29.svg.png',
+            'veolia': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Veolia_logo.svg/200px-Veolia_logo.svg.png',
+            'région île-de-france': 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6e/Logo_%C3%8Ele-de-France.svg/200px-Logo_%C3%8Ele-de-France.svg.png',
+            'region idf': 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6e/Logo_%C3%8Ele-de-France.svg/200px-Logo_%C3%8Ele-de-France.svg.png',
+            'cnes': 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8e/Logo_CNES.svg/200px-Logo_CNES.svg.png',
+            'police nationale': 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/72/Logo_de_la_Police_nationale_%28France%29.svg/200px-Logo_de_la_Police_nationale_%28France%29.svg.png',
+            'gendarmerie nationale': 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/88/Logo_Gendarmerie_Nationale.svg/200px-Logo_Gendarmerie_Nationale.svg.png',
+            'pass culture': 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7a/Logo_du_Pass_Culture.svg/200px-Logo_du_Pass_Culture.svg.png',
+            'dgsi': 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8c/Logo_DGSI.svg/200px-Logo_DGSI.svg.png',
+            'engie': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Logo_ENGIE.svg/200px-Logo_ENGIE.svg.png',
+            'safran': 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/37/Safran_-_logo_2016.png/200px-Safran_-_logo_2016.png',
+            'total': 'https://upload.wikimedia.org/wikipedia/fr/thumb/f/f5/Logo_TotalEnergies.svg/200px-Logo_TotalEnergies.svg.png',
+            'totalenergies': 'https://upload.wikimedia.org/wikipedia/fr/thumb/f/f5/Logo_TotalEnergies.svg/200px-Logo_TotalEnergies.svg.png',
+            'bnp paribas': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/BNP_Paribas.svg/200px-BNP_Paribas.svg.png',
+            'crédit agricole': 'https://upload.wikimedia.org/wikipedia/fr/thumb/f/f4/Logo_Cr%C3%A9dit_Agricole.svg/200px-Logo_Cr%C3%A9dit_Agricole.svg.png',
+            'air france': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Air_France_Logo.svg/200px-Air_France_Logo.svg.png',
+            'airbus': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Airbus_Logo_2017.svg/200px-Airbus_Logo_2017.svg.png',
+            'orange': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/200px-Orange_logo.svg.png',
+            'health data hub': 'https://www.health-data-hub.fr/sites/default/files/logo.png',
+            'ansm': 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/71/Logo_ANSM.svg/200px-Logo_ANSM.svg.png',
+        };
+
+        // Config Grist
         let gristDocId = null;
-        let gristApiUrl = null;
         let isGristReady = false;
 
-        // Fonction pour charger les donnees d'une table via l'API Grist
+        // Charger une table Grist
         async function fetchGristTable(tableName) {
             if (!gristDocId) return [];
             try {
                 const data = await grist.docApi.fetchTable(tableName);
                 if (!data || !data.id) return [];
-                // Convertir le format colonnes en format lignes
                 const records = [];
                 const numRecords = data.id.length;
                 const columns = Object.keys(data);
@@ -519,11 +776,8 @@
             }
         }
 
-        // Charger toutes les tables Grist
+        // Charger toutes les tables
         async function loadAllGristTables() {
-            console.log('Chargement des tables Grist...');
-
-            // Charger la table principale Entreprises
             const entreprisesData = await fetchGristTable('Entreprises');
             if (entreprisesData.length > 0) {
                 entreprises = entreprisesData.map(r => ({
@@ -541,7 +795,6 @@
                 }));
             }
 
-            // Charger Table1 (Solutions_IA)
             const solutionsData = await fetchGristTable('Table1');
             if (solutionsData.length > 0) {
                 solutions = solutionsData.map(r => ({
@@ -553,7 +806,6 @@
                 }));
             }
 
-            // Charger Table2 (References_Clients)
             const clientsData = await fetchGristTable('Table2');
             if (clientsData.length > 0) {
                 clients = clientsData.map(r => ({
@@ -565,7 +817,6 @@
                 }));
             }
 
-            // Charger Table3 (Investisseurs)
             const investisseursData = await fetchGristTable('Table3');
             if (investisseursData.length > 0) {
                 investisseurs = investisseursData.map(r => ({
@@ -577,7 +828,6 @@
                 }));
             }
 
-            // Charger Table4 (Expertises)
             const expertisesData = await fetchGristTable('Table4');
             if (expertisesData.length > 0) {
                 expertises = expertisesData.map(r => ({
@@ -588,7 +838,6 @@
                 }));
             }
 
-            // Charger Table5 (LinkedIn_Insights)
             const linkedinData = await fetchGristTable('Table5');
             if (linkedinData.length > 0) {
                 linkedinInsights = linkedinData.map(r => ({
@@ -600,29 +849,17 @@
                 }));
             }
 
-            console.log('Tables chargees:', {
-                entreprises: entreprises.length,
-                solutions: solutions.length,
-                clients: clients.length,
-                investisseurs: investisseurs.length,
-                expertises: expertises.length,
-                linkedinInsights: linkedinInsights.length
-            });
-
             populateSelect();
         }
 
         function initGrist() {
             if (typeof grist !== 'undefined') {
-                grist.ready({
-                    requiredAccess: 'full'
-                });
+                grist.ready({ requiredAccess: 'full' });
 
-                // Attendre que Grist soit pret puis charger toutes les tables
                 grist.onRecord(async function(record) {
                     if (!isGristReady) {
                         isGristReady = true;
-                        gristDocId = true; // Flag pour indiquer que nous sommes dans Grist
+                        gristDocId = true;
                         await loadAllGristTables();
                     }
                     if (record && record.id) {
@@ -633,76 +870,68 @@
                         }
                     }
                 });
-
             } else {
-                // Mode standalone - donnees de demo
                 loadDemoData();
             }
         }
 
         function loadDemoData() {
             entreprises = [
-                { id: 1, nom: "OWI", description: "Leader francais des chatbots et agents virtuels. Specialise dans l'IA conversationnelle pour le service client.", siteWeb: "https://www.owi.fr/", logoURL: "", dateCreation: "2011", effectifs: "50-100", siege: "Paris", secteur: "IA Conversationnelle", ca: "Non communique", linkedInURL: "https://www.linkedin.com/company/owi-tech/" },
-                { id: 2, nom: "EuroMC", description: "Specialiste de la protection electromagnetique (CEM). Cages de Faraday et blindages pour defense.", siteWeb: "https://www.euromc.fr/", logoURL: "", dateCreation: "1992", effectifs: "6-9", siege: "Stains (93)", secteur: "Protection CEM", ca: "2,3M EUR", linkedInURL: "https://fr.linkedin.com/company/euromc" },
-                { id: 3, nom: "DreamOnTech", description: "Editeur SaaS de cybersecurite. Plateforme PanicSafe de gestion de crise cyber augmentee par IA.", siteWeb: "https://www.dream-on.tech/", logoURL: "", dateCreation: "Mai 2024", effectifs: "12-15", siege: "Lyon", secteur: "Cybersecurite / IA", ca: "Non communique", linkedInURL: "https://fr.linkedin.com/company/dream-on-tech" },
-                { id: 5, nom: "EULER DATA SOLUTIONS", description: "Scale-up technologique specialisee en plateformes d'investigation et renseignement Big Data pilotees par IA. Solutions INTEGRA, ENIGMA, ATHENA. Clients: DGSI, DGSE, Gendarmerie.", siteWeb: "https://eulerds.com/fr", logoURL: "", dateCreation: "2015 (FR: 2021)", effectifs: "17-50", siege: "Bordeaux", secteur: "Renseignement / Investigation IA", ca: "Non communique", linkedInURL: "https://www.linkedin.com/company/euler-data-solutions" },
-                { id: 6, nom: "Cleyrop", description: "Premier DataHub europeen souverain. Solutions data et IA generative (HEMERA, OGMA) pour secteur public.", siteWeb: "https://www.cleyrop.com/", logoURL: "", dateCreation: "Nov 2020", effectifs: "29-50", siege: "Paris 9e", secteur: "Data Platform / IA souveraine", ca: "Non communique", linkedInURL: "https://fr.linkedin.com/company/cleyrop" },
-                { id: 7, nom: "Theodo", description: "Cabinet de conseil et developpement digital. 6 entites dont Theodo Data & AI et GovTech.", siteWeb: "https://www.theodo.fr/", logoURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Theodo_-_2024_Logo.png/220px-Theodo_-_2024_Logo.png", dateCreation: "2009", effectifs: "731", siege: "Paris 17e", secteur: "Conseil / Dev / IA", ca: "90M EUR", linkedInURL: "https://www.linkedin.com/company/theodo" },
-                { id: 8, nom: "TRANSCRIPT - AUTHOT", description: "Specialiste francais de la transcription automatique et sous-titrage. 100% souverain.", siteWeb: "https://authot.com", logoURL: "", dateCreation: "Oct 2012", effectifs: "47", siege: "Ivry-sur-Seine", secteur: "Speech-to-Text / IA", ca: "Non communique", linkedInURL: "https://fr.linkedin.com/company/authot" },
-                { id: 9, nom: "EURODECISION", description: "Leader francais en mathematiques decisionnelles et optimisation. 900+ projets.", siteWeb: "https://www.eurodecision.eu/", logoURL: "https://www.eurodecision.eu/wp-content/themes/eurodecision/img/logo-eurod.jpg", dateCreation: "1987", effectifs: "260", siege: "Versailles", secteur: "Optimisation / RO / IA", ca: "~30M EUR", linkedInURL: "https://www.linkedin.com/company/eurodecision" },
-                { id: 10, nom: "LightOn", description: "Entreprise deep tech d'IA generative souveraine. Plateforme Paradigm et LLM Alfred. Cotee Euronext.", siteWeb: "https://www.lighton.ai/fr/home", logoURL: "", dateCreation: "Juin 2016", effectifs: "48", siege: "Paris 2e", secteur: "IA Generative / LLM", ca: "1,8M EUR -> 40M EUR", linkedInURL: "https://fr.linkedin.com/company/lighton" },
-                { id: 11, nom: "Hexamind", description: "Cabinet conseil et integrateur IA francais. Expert NLP et LLM open source. Partenaire OpenLLM-France.", siteWeb: "https://www.hexamind.ai/", logoURL: "", dateCreation: "Jan 2023", effectifs: "5-10", siege: "Paris / Montreuil", secteur: "Conseil IA / NLP / LLM", ca: "Non communique", linkedInURL: "https://fr.linkedin.com/company/hexamind-ai" },
-                { id: 12, nom: "Axon", description: "ESN specialisee Data Science et IA. Plusieurs entites francaises portent ce nom.", siteWeb: "https://axonedata.com/", logoURL: "", dateCreation: "2017", effectifs: "16-20", siege: "Courbevoie", secteur: "Data Science / IA", ca: "Non communique", linkedInURL: "https://www.linkedin.com/company/axone-data" },
-                { id: 13, nom: "MICELIA", description: "Startup IA grenobloise. Solutions sur mesure : vision par ordinateur, NLP, prediction.", siteWeb: "https://www.micelia.fr/", logoURL: "", dateCreation: "Juil 2025", effectifs: "3-5", siege: "Grenoble", secteur: "IA sur mesure", ca: "Non communique", linkedInURL: "" },
-                { id: 14, nom: "Coppernic", description: "Integrateur de terminaux mobiles professionnels. Biometrie, RFID, IoT.", siteWeb: "https://www.coppernic.fr/", logoURL: "", dateCreation: "2008", effectifs: "37-39", siege: "Aix-en-Provence", secteur: "Terminaux / Biometrie / IoT", ca: "9,8M EUR", linkedInURL: "https://fr.linkedin.com/company/coppernic" },
-                { id: 15, nom: "WAVESTONE", description: "Cabinet de conseil international leader en transformation digitale et IA. Cote Euronext (WAVE). Great Place to Work #1 France 2024. Expertise Data, IA, cybersecurite.", siteWeb: "https://www.wavestone.com/fr/", logoURL: "https://www.wavestone.com/wp-content/uploads/2024/05/5034003484e-wavestonelogotype-bluergb.png", dateCreation: "1990 (Wavestone: 2016)", effectifs: "6 000+", siege: "Paris La Defense", secteur: "Conseil / Transformation digitale / IA", ca: "943,7M EUR", linkedInURL: "https://www.linkedin.com/company/wavestone" }
+                { id: 1, nom: "OWI", description: "Leader français des chatbots et agents virtuels depuis 2008. Fondée par Christophe Dany et Frédéric Jurain (CentraleSupélec), OWI développe des solutions d'IA conversationnelle avec 20 ans de R&D en traitement du langage naturel. Clients majeurs : BNP Paribas, EDF, MAIF, Ministère de l'Économie.", siteWeb: "https://www.owi.fr/", logoURL: "", dateCreation: "2008", effectifs: "50-100", siege: "Antony", secteur: "IA Conversationnelle", ca: "Non communiqué", linkedInURL: "https://www.linkedin.com/company/owi-tech/" },
+                { id: 2, nom: "EuroMC", description: "Expert français en protection électromagnétique depuis 1992. Conception de cages de Faraday, blindages CEM et technologie brevetée GREYSHIELD®. Plus de 30 ans d'expérience au service de la défense et des data centers.", siteWeb: "https://www.euromc.fr/", logoURL: "", dateCreation: "1992", effectifs: "6-9", siege: "Stains (93)", secteur: "Protection CEM", ca: "2,3M€", linkedInURL: "https://fr.linkedin.com/company/euromc" },
+                { id: 3, nom: "DreamOnTech", description: "Startup cybersécurité fondée en mai 2024 par Mikael Masson et Cédric Matharan (25 ans d'expérience chacun). Plateforme PanicSafe de gestion de crise cyber augmentée par l'IA avec assistant SARA. Levée de 1,3M€ en 2025.", siteWeb: "https://www.dream-on.tech/", logoURL: "", dateCreation: "Mai 2024", effectifs: "12-15", siege: "Lyon", secteur: "Cybersécurité / IA", ca: "Non communiqué", linkedInURL: "https://fr.linkedin.com/company/dream-on-tech" },
+                { id: 6, nom: "Cleyrop", description: "Premier DataHub européen souverain, fondé en 2020 par 4 entrepreneurs du collectif CoData. Solutions HEMERA (plateforme data) et OGMA (IA générative souveraine). Certifié SecNumCloud, lauréat French Tech 2030. 18M€ levés dont 10M€ Série A en 2024.", siteWeb: "https://www.cleyrop.com/", logoURL: "", dateCreation: "Déc 2020", effectifs: "47", siege: "Paris 9e", secteur: "Data Platform / IA souveraine", ca: "Non communiqué", linkedInURL: "https://fr.linkedin.com/company/cleyrop" },
+                { id: 7, nom: "Theodo", description: "Groupe de conseil digital fondé en 2009 par Benoît Charles-Lavauzelle et Fabrice Bernhard (Polytechnique). 700+ collaborateurs, 90M€ de CA. Auteurs du 'Lean Tech Manifesto'. Top 10 Happy at Work depuis 8 ans.", siteWeb: "https://www.theodo.fr/", logoURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Theodo_-_2024_Logo.png/220px-Theodo_-_2024_Logo.png", dateCreation: "2009", effectifs: "700+", siege: "Paris 17e", secteur: "Conseil digital / IA", ca: "90M€", linkedInURL: "https://www.linkedin.com/company/theodo" },
+                { id: 10, nom: "LightOn", description: "Deep tech française d'IA générative souveraine, fondée en 2016 par 4 chercheurs. Première startup GenAI européenne cotée en bourse (Euronext, nov 2024). Plateforme Paradigm et LLM Alfred. Clients : Safran, Région IDF, CNES.", siteWeb: "https://www.lighton.ai/fr/home", logoURL: "", dateCreation: "2016", effectifs: "48", siege: "Paris 2e", secteur: "IA Générative / LLM", ca: "1,8M€", linkedInURL: "https://fr.linkedin.com/company/lighton" },
+                { id: 15, nom: "WAVESTONE", description: "Cabinet de conseil international né de la fusion Solucom + Kurt Salmon (2016). Coté Euronext (WAVE), 6000+ collaborateurs, 943M€ CA. Great Place to Work #1 France 2024. Expertise Data & IA, cybersécurité, transformation digitale.", siteWeb: "https://www.wavestone.com/fr/", logoURL: "https://www.wavestone.com/wp-content/uploads/2024/05/5034003484e-wavestonelogotype-bluergb.png", dateCreation: "2016", effectifs: "6 000+", siege: "Paris La Défense", secteur: "Conseil / IA", ca: "943,7M€", linkedInURL: "https://www.linkedin.com/company/wavestone" }
             ];
 
             solutions = [
-                { entreprise: 3, nom: "PanicSafe", description: "Plateforme SaaS de gestion de crise cyber", type: "IA Generative", usage: "Collectivites" },
-                { entreprise: 5, nom: "INTEGRA", description: "Plateforme centrale d'enquete et fusion du renseignement", type: "Big Data / Graph IA", usage: "Gendarmerie, DGSI, DGSE" },
-                { entreprise: 5, nom: "ENIGMA", description: "Plateforme d'enquete financiere et conformite AML", type: "IA Financiere", usage: "Unites renseignement financier" },
-                { entreprise: 5, nom: "CYBEROIDE", description: "Visualisation des operations de lutte informatique", type: "Cyber-renseignement", usage: "Commandement Cyberdefense" },
-                { entreprise: 6, nom: "HEMERA", description: "Plateforme data de bout en bout", type: "Data Platform", usage: "Ministeres, IRSN" },
-                { entreprise: 6, nom: "OGMA", description: "IA generative de confiance", type: "LLM souverain", usage: "Secteur public" },
-                { entreprise: 7, nom: "Theodo GovTech", description: "Solutions numeriques secteur public", type: "Dev", usage: "Ministeres" },
-                { entreprise: 8, nom: "Authot App", description: "Transcription automatique 100 langues", type: "Speech-to-Text", usage: "Universites, CNED" },
-                { entreprise: 9, nom: "Optimisation RH", description: "Algorithmes plannings", type: "RO/ML", usage: "RATP, SNCF" },
-                { entreprise: 10, nom: "Paradigm", description: "Plateforme IA generative enterprise", type: "LLM/RAG", usage: "Region IDF, CNES" },
-                { entreprise: 10, nom: "Alfred LLM", description: "LLM open source 40B parametres", type: "LLM", usage: "Deploiement souverain" },
-                { entreprise: 15, nom: "Data & IA Practice", description: "Accompagnement strategie data et projets IA", type: "Conseil Data/IA", usage: "Grandes entreprises, secteur public" },
-                { entreprise: 15, nom: "InfoXtractor", description: "Document processing automatise par IA generative", type: "IA Generative / NLP", usage: "Traitement documents" },
-                { entreprise: 15, nom: "CERT-Wavestone", description: "Services cybersecurite avec equipe CERT dediee", type: "Cybersecurite", usage: "Entreprises, secteur public" }
+                { entreprise: 1, nom: "OWI.Chatbot", description: "Solution omnicanale de chatbot intelligent", type: "NLP / IA Conversationnelle", usage: "Service client, secteur public" },
+                { entreprise: 3, nom: "PanicSafe", description: "Plateforme SaaS de gestion de crise cyber", type: "IA Générative", usage: "PME, collectivités" },
+                { entreprise: 3, nom: "SARA", description: "Assistant IA conversationnel de crise", type: "Chatbot IA", usage: "Réponse incidents" },
+                { entreprise: 6, nom: "HEMERA", description: "Plateforme data de bout en bout", type: "Data Platform", usage: "Ministères, IRSN" },
+                { entreprise: 6, nom: "OGMA", description: "IA générative de confiance", type: "LLM souverain", usage: "Secteur public" },
+                { entreprise: 10, nom: "Paradigm", description: "Plateforme IA générative entreprise", type: "LLM / RAG", usage: "Région IDF, CNES" },
+                { entreprise: 15, nom: "Data & IA Practice", description: "Accompagnement stratégie data et IA", type: "Conseil", usage: "Grandes entreprises" }
             ];
 
             clients = [
-                { entreprise: 5, nom: "Ministere de l'Interieur", secteur: "Public", projet: "Plateforme investigation" },
-                { entreprise: 5, nom: "Gendarmerie Nationale", secteur: "Public", projet: "Renseignement Big Data" },
-                { entreprise: 5, nom: "DGSI", secteur: "Public", projet: "Investigation Big Data" },
-                { entreprise: 5, nom: "Commandement Cyberdefense", secteur: "Public", projet: "CYBEROIDE" },
+                { entreprise: 1, nom: "BNP Paribas", secteur: "Privé", projet: "Chatbot service client" },
+                { entreprise: 1, nom: "EDF", secteur: "Public", projet: "IA conversationnelle" },
                 { entreprise: 6, nom: "Atout France", secteur: "Public", projet: "Plateforme data tourisme" },
-                { entreprise: 6, nom: "IRSN", secteur: "Public", projet: "Expertise Augmentee" },
+                { entreprise: 6, nom: "IRSN", secteur: "Public", projet: "Expertise Augmentée" },
+                { entreprise: 6, nom: "ENGIE", secteur: "Public", projet: "DataHub énergie" },
                 { entreprise: 7, nom: "Pass Culture", secteur: "Public", projet: "Application jeunes" },
-                { entreprise: 8, nom: "Universite Paris 2", secteur: "Public", projet: "Transcription 90k EUR" },
-                { entreprise: 9, nom: "RATP", secteur: "Public", projet: "10 000 conducteurs" },
-                { entreprise: 9, nom: "SNCF", secteur: "Public", projet: "Graphiques circulation" },
-                { entreprise: 10, nom: "Region IDF", secteur: "Public", projet: "Chatbot aides" },
+                { entreprise: 10, nom: "Région Île-de-France", secteur: "Public", projet: "Chatbot aides" },
                 { entreprise: 10, nom: "CNES", secteur: "Public", projet: "Solutions LLM" },
-                { entreprise: 14, nom: "Police Nationale", secteur: "Public", projet: "Terminaux biometriques" },
+                { entreprise: 10, nom: "Safran", secteur: "Privé", projet: "IA industrielle" },
                 { entreprise: 15, nom: "EDF", secteur: "Public", projet: "Transformation digitale" },
                 { entreprise: 15, nom: "SNCF", secteur: "Public", projet: "Conseil IA" },
-                { entreprise: 15, nom: "La Poste", secteur: "Public", projet: "Transformation numerique" },
-                { entreprise: 15, nom: "Veolia", secteur: "Prive", projet: "IA maintenance predictive" }
+                { entreprise: 15, nom: "La Poste", secteur: "Public", projet: "Transformation numérique" }
             ];
 
             investisseurs = [
-                { entreprise: 3, nom: "HUB612", type: "VC", montant: "1,3M EUR", date: "2025" },
-                { entreprise: 5, nom: "Fonds europeen (non divulgue)", type: "VC", montant: "Non communique", date: "2021" },
-                { entreprise: 6, nom: "BPI France", type: "Public", montant: "4M EUR", date: "2021" },
-                { entreprise: 6, nom: "KEEN Venture Partners", type: "VC", montant: "10M EUR+", date: "2023" },
-                { entreprise: 10, nom: "IPO Euronext", type: "Bourse", montant: "11,9M EUR", date: "Nov 2024" },
-                { entreprise: 10, nom: "Quantonation", type: "VC Deep Tech", montant: "2,9M EUR", date: "2018" },
-                { entreprise: 15, nom: "Euronext Paris (WAVE)", type: "Bourse", montant: "Cote depuis 2000", date: "2000" }
+                { entreprise: 1, nom: "Naxicap Partners", type: "VC", montant: "2M€", date: "2017" },
+                { entreprise: 3, nom: "HUB612", type: "Accélérateur", montant: "1,3M€", date: "2025" },
+                { entreprise: 6, nom: "KEEN Venture Partners", type: "VC", montant: "10M€+", date: "2024" },
+                { entreprise: 6, nom: "BPI France", type: "Public", montant: "4M€", date: "2021" },
+                { entreprise: 10, nom: "IPO Euronext", type: "Bourse", montant: "10,4M€", date: "Nov 2024" }
+            ];
+
+            expertises = [
+                { entreprise: 2, domaine: "Protection électromagnétique", technologies: "Cages de Faraday, GREYSHIELD®, Blindage CEM", certifications: "EN50147-1, IEEE-299, MIL-STD-285" },
+                { entreprise: 3, domaine: "Cybersécurité", technologies: "Blockchain, IA générative, SecNumCloud", certifications: "SecNumCloud (en cours)" },
+                { entreprise: 6, domaine: "Data Platform souveraine", technologies: "Node.js, PostgreSQL, Kafka, Spark, Mistral AI", certifications: "SecNumCloud 3.2, French Tech 2030" }
+            ];
+
+            linkedinInsights = [
+                { entreprise: 1, nbEmployes: "50-100", croissance: "Stable", publications: "Actif", reputation: "Leader français chatbots depuis 2008, 95-98% fiabilité" },
+                { entreprise: 3, nbEmployes: "15", croissance: "Forte", publications: "Très actif", reputation: "Startup ambitieuse, fondateurs 25 ans d'expérience" },
+                { entreprise: 6, nbEmployes: "47", croissance: "Forte", publications: "Très actif", reputation: "Leader DataHub souverain, French Tech 2030" },
+                { entreprise: 7, nbEmployes: "700+", croissance: "50%/an", publications: "Très actif", reputation: "Top 10 Happy at Work 8 ans consécutifs, 4.6/5 Glassdoor" },
+                { entreprise: 10, nbEmployes: "48", croissance: "En développement", publications: "Actif", reputation: "1ère startup GenAI européenne cotée en bourse" },
+                { entreprise: 15, nbEmployes: "6000+", croissance: "Forte", publications: "Très actif", reputation: "Great Place to Work #1 France 2024" }
             ];
 
             populateSelect();
@@ -710,8 +939,7 @@
 
         function populateSelect() {
             const select = document.getElementById('companySelect');
-            select.innerHTML = '<option value="">Selectionnez une entreprise...</option>';
-
+            select.innerHTML = '<option value="">Choisir une entreprise...</option>';
             entreprises.forEach(e => {
                 const option = document.createElement('option');
                 option.value = e.id;
@@ -720,21 +948,18 @@
             });
         }
 
-        function displayCompanyFromGrist(record) {
-            const company = {
-                id: record.id,
-                nom: record.nom || record.Nom || 'Sans nom',
-                description: record.Description || '',
-                siteWeb: record.SiteWeb || '',
-                logoURL: record.LogoURL || '',
-                dateCreation: record.DateCreation || '',
-                effectifs: record.Effectifs || '',
-                siege: record.Siege || '',
-                secteur: record.Secteur || '',
-                ca: record.CA || '',
-                linkedInURL: record.LinkedInURL || ''
-            };
-            displayCompany(company);
+        function getClientLogo(clientName) {
+            const nameLower = clientName.toLowerCase().trim();
+            for (const [key, url] of Object.entries(clientLogos)) {
+                if (nameLower.includes(key) || key.includes(nameLower)) {
+                    return url;
+                }
+            }
+            return null;
+        }
+
+        function getInitials(name) {
+            return name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
         }
 
         function displayCompany(company) {
@@ -744,202 +969,165 @@
             const companySolutions = solutions.filter(s => s.entreprise === company.id);
             const companyInvestors = investisseurs.filter(i => i.entreprise === company.id);
             const companyExpertises = expertises.filter(e => e.entreprise === company.id);
-            const companyLinkedIn = linkedinInsights.filter(l => l.entreprise === company.id);
+            const companyLinkedIn = linkedinInsights.find(l => l.entreprise === company.id);
 
-            const logoInitials = company.nom.substring(0, 2).toUpperCase();
             const logoHtml = company.logoURL
-                ? `<img src="${company.logoURL}" alt="${company.nom}" onerror="this.parentElement.innerHTML='<span class=\\'placeholder\\'>${logoInitials}</span>'">`
-                : `<span class="placeholder">${logoInitials}</span>`;
+                ? `<img src="${company.logoURL}" alt="${company.nom}" onerror="this.parentElement.innerHTML='<span class=\\'initials\\'>${getInitials(company.nom)}</span>'">`
+                : `<span class="initials">${getInitials(company.nom)}</span>`;
 
             container.innerHTML = `
-                <div class="company-card">
-                    <div class="company-header">
-                        <div class="company-logo">
-                            ${logoHtml}
+                <div class="company-hero animate-in">
+                    <div class="company-hero-content">
+                        <div class="company-logo">${logoHtml}</div>
+                        <div class="company-main-info">
+                            <h1 class="company-name">${company.nom}</h1>
+                            ${company.secteur ? `<div class="company-sector"><i class="fas fa-microchip"></i> ${company.secteur}</div>` : ''}
+                            <p class="company-description">${company.description}</p>
+
+                            <div class="links-bar">
+                                ${company.siteWeb ? `<a href="${company.siteWeb}" target="_blank" class="link-btn"><i class="fas fa-globe"></i> Site web</a>` : ''}
+                                ${company.linkedInURL ? `<a href="${company.linkedInURL}" target="_blank" class="link-btn secondary"><i class="fab fa-linkedin"></i> LinkedIn</a>` : ''}
+                            </div>
                         </div>
-                        <div class="company-info">
-                            <h2>${company.nom}</h2>
-                            ${company.secteur ? `<span class="sector"><i class="fas fa-microchip"></i> ${company.secteur}</span>` : ''}
+                    </div>
+
+                    <div class="quick-stats">
+                        ${company.dateCreation ? `<div class="stat-item"><div class="stat-value">${company.dateCreation}</div><div class="stat-label">Création</div></div>` : ''}
+                        ${company.effectifs ? `<div class="stat-item"><div class="stat-value">${company.effectifs}</div><div class="stat-label">Collaborateurs</div></div>` : ''}
+                        ${company.ca && company.ca !== 'Non communiqué' ? `<div class="stat-item"><div class="stat-value">${company.ca}</div><div class="stat-label">Chiffre d'affaires</div></div>` : ''}
+                        ${company.siege ? `<div class="stat-item"><div class="stat-value">${company.siege}</div><div class="stat-label">Siège</div></div>` : ''}
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    ${companySolutions.length > 0 ? `
+                    <div class="section-card animate-in delay-1">
+                        <div class="section-header">
+                            <div class="section-icon blue"><i class="fas fa-lightbulb"></i></div>
+                            <h2 class="section-title">Solutions IA</h2>
+                        </div>
+                        ${companySolutions.map(s => `
+                        <div class="solution-item">
+                            <div class="solution-name">${s.nom}</div>
+                            <div class="solution-desc">${s.description}</div>
+                            <div class="solution-tags">
+                                <span class="tag blue">${s.type}</span>
+                                ${s.usage ? `<span class="tag">${s.usage}</span>` : ''}
+                            </div>
+                        </div>
+                        `).join('')}
+                    </div>
+                    ` : ''}
+
+                    ${companyInvestors.length > 0 ? `
+                    <div class="section-card animate-in delay-2">
+                        <div class="section-header">
+                            <div class="section-icon orange"><i class="fas fa-coins"></i></div>
+                            <h2 class="section-title">Financement</h2>
+                        </div>
+                        ${companyInvestors.map(i => `
+                        <div class="investor-item">
+                            <div class="investor-info">
+                                <div class="investor-name">${i.nom}</div>
+                                <div class="investor-type">${i.type}</div>
+                            </div>
+                            <div class="investor-amount">
+                                <div class="amount">${i.montant}</div>
+                                <div class="date">${i.date}</div>
+                            </div>
+                        </div>
+                        `).join('')}
+                    </div>
+                    ` : ''}
+
+                    ${companyClients.length > 0 ? `
+                    <div class="section-card full-width animate-in delay-2">
+                        <div class="section-header">
+                            <div class="section-icon green"><i class="fas fa-building"></i></div>
+                            <h2 class="section-title">Références Clients</h2>
+                        </div>
+                        <div class="clients-grid">
+                            ${companyClients.map(c => {
+                                const logoUrl = getClientLogo(c.nom);
+                                return `
+                                <div class="client-card">
+                                    <div class="client-logo-wrapper">
+                                        ${logoUrl
+                                            ? `<img src="${logoUrl}" alt="${c.nom}" onerror="this.parentElement.innerHTML='<span class=\\'client-initials\\'>${getInitials(c.nom)}</span>'">`
+                                            : `<span class="client-initials">${getInitials(c.nom)}</span>`
+                                        }
+                                    </div>
+                                    <div class="client-name">${c.nom}</div>
+                                    <div class="client-project">${c.projet}</div>
+                                </div>
+                                `;
+                            }).join('')}
                         </div>
                     </div>
+                    ` : ''}
 
-                    <div class="company-meta">
-                        ${company.dateCreation ? `
-                        <div class="meta-item">
-                            <div class="label"><i class="fas fa-calendar"></i> Creation</div>
-                            <div class="value">${company.dateCreation}</div>
-                        </div>` : ''}
-                        ${company.effectifs ? `
-                        <div class="meta-item">
-                            <div class="label"><i class="fas fa-users"></i> Effectifs</div>
-                            <div class="value">${company.effectifs}</div>
-                        </div>` : ''}
-                        ${company.siege ? `
-                        <div class="meta-item">
-                            <div class="label"><i class="fas fa-map-marker-alt"></i> Siege</div>
-                            <div class="value">${company.siege}</div>
-                        </div>` : ''}
-                        ${company.ca ? `
-                        <div class="meta-item">
-                            <div class="label"><i class="fas fa-euro-sign"></i> Chiffre d'affaires</div>
-                            <div class="value">${company.ca}</div>
-                        </div>` : ''}
-                        ${company.siteWeb ? `
-                        <div class="meta-item">
-                            <div class="label"><i class="fas fa-globe"></i> Site Web</div>
-                            <div class="value"><a href="${company.siteWeb}" target="_blank">${company.siteWeb.replace('https://', '').replace('http://', '').split('/')[0]}</a></div>
-                        </div>` : ''}
-                        ${company.linkedInURL ? `
-                        <div class="meta-item">
-                            <div class="label"><i class="fab fa-linkedin"></i> LinkedIn</div>
-                            <div class="value"><a href="${company.linkedInURL}" target="_blank">Voir le profil</a></div>
-                        </div>` : ''}
+                    ${companyExpertises.length > 0 ? `
+                    <div class="section-card animate-in delay-3">
+                        <div class="section-header">
+                            <div class="section-icon purple"><i class="fas fa-certificate"></i></div>
+                            <h2 class="section-title">Expertise</h2>
+                        </div>
+                        ${companyExpertises.map(e => `
+                        <div class="expertise-item">
+                            <div class="expertise-domain">${e.domaine}</div>
+                            <div class="expertise-tech">${e.technologies}</div>
+                            ${e.certifications ? `<div class="expertise-certif"><i class="fas fa-award"></i> ${e.certifications}</div>` : ''}
+                        </div>
+                        `).join('')}
                     </div>
+                    ` : ''}
 
-                    ${company.description ? `
-                    <div class="description-section">
-                        <h3><i class="fas fa-info-circle"></i> Description</h3>
-                        <p>${company.description}</p>
-                    </div>` : ''}
-
-                    <div class="sections-grid">
-                        ${companySolutions.length > 0 ? `
-                        <div class="section open">
-                            <div class="section-header" onclick="toggleSection(this)">
-                                <h3><span class="icon solutions"><i class="fas fa-lightbulb"></i></span> Solutions IA (${companySolutions.length})</h3>
-                                <i class="fas fa-chevron-down toggle"></i>
+                    ${companyLinkedIn ? `
+                    <div class="section-card animate-in delay-3">
+                        <div class="reputation-card">
+                            <div class="reputation-header">
+                                <i class="fab fa-linkedin"></i>
+                                <span>E-Réputation</span>
                             </div>
-                            <div class="section-content">
-                                <div class="section-inner">
-                                    ${companySolutions.map(s => `
-                                    <div class="item-card">
-                                        <div class="item-title">${s.nom}</div>
-                                        <div class="item-desc">${s.description}</div>
-                                        <div class="item-meta">
-                                            <span class="tag">${s.type}</span>
-                                            ${s.usage ? `<span class="tag">${s.usage}</span>` : ''}
-                                        </div>
-                                    </div>
-                                    `).join('')}
+                            <div class="reputation-stats">
+                                <div class="rep-stat">
+                                    <div class="rep-stat-value">${companyLinkedIn.nbEmployes}</div>
+                                    <div class="rep-stat-label">Employés</div>
+                                </div>
+                                <div class="rep-stat">
+                                    <div class="rep-stat-value">${companyLinkedIn.croissance}</div>
+                                    <div class="rep-stat-label">Croissance</div>
                                 </div>
                             </div>
-                        </div>` : ''}
-
-                        ${companyClients.length > 0 ? `
-                        <div class="section">
-                            <div class="section-header" onclick="toggleSection(this)">
-                                <h3><span class="icon clients"><i class="fas fa-building"></i></span> References Clients (${companyClients.length})</h3>
-                                <i class="fas fa-chevron-down toggle"></i>
+                            <div class="reputation-text">
+                                ${companyLinkedIn.reputation ? `<strong>Réputation</strong>${companyLinkedIn.reputation}` : ''}
                             </div>
-                            <div class="section-content">
-                                <div class="section-inner">
-                                    ${companyClients.map(c => `
-                                    <div class="item-card">
-                                        <div class="item-title">${c.nom}</div>
-                                        <div class="item-desc">${c.projet}</div>
-                                        <div class="item-meta">
-                                            <span class="tag">${c.secteur}</span>
-                                        </div>
-                                    </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>` : ''}
-
-                        ${companyInvestors.length > 0 ? `
-                        <div class="section">
-                            <div class="section-header" onclick="toggleSection(this)">
-                                <h3><span class="icon investors"><i class="fas fa-coins"></i></span> Investisseurs (${companyInvestors.length})</h3>
-                                <i class="fas fa-chevron-down toggle"></i>
-                            </div>
-                            <div class="section-content">
-                                <div class="section-inner">
-                                    ${companyInvestors.map(i => `
-                                    <div class="item-card">
-                                        <div class="item-title">${i.nom}</div>
-                                        <div class="item-desc">${i.montant} - ${i.date}</div>
-                                        <div class="item-meta">
-                                            <span class="tag">${i.type}</span>
-                                        </div>
-                                    </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>` : ''}
-
-                        ${companyExpertises.length > 0 ? `
-                        <div class="section">
-                            <div class="section-header" onclick="toggleSection(this)">
-                                <h3><span class="icon expertise"><i class="fas fa-certificate"></i></span> Expertise Technique (${companyExpertises.length})</h3>
-                                <i class="fas fa-chevron-down toggle"></i>
-                            </div>
-                            <div class="section-content">
-                                <div class="section-inner">
-                                    ${companyExpertises.map(e => `
-                                    <div class="item-card">
-                                        <div class="item-title">${e.domaine}</div>
-                                        <div class="item-desc">${e.technologies}</div>
-                                        ${e.certifications ? `<div class="item-meta"><span class="tag"><i class="fas fa-award"></i> ${e.certifications}</span></div>` : ''}
-                                    </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>` : ''}
-
-                        ${companyLinkedIn.length > 0 ? `
-                        <div class="section">
-                            <div class="section-header" onclick="toggleSection(this)">
-                                <h3><span class="icon linkedin"><i class="fab fa-linkedin"></i></span> E-Reputation LinkedIn</h3>
-                                <i class="fas fa-chevron-down toggle"></i>
-                            </div>
-                            <div class="section-content">
-                                <div class="section-inner">
-                                    ${companyLinkedIn.map(l => `
-                                    <div class="item-card">
-                                        <div class="item-meta" style="margin-bottom: 10px;">
-                                            <span class="tag"><i class="fas fa-users"></i> ${l.nbEmployes} employes</span>
-                                            <span class="tag"><i class="fas fa-chart-line"></i> ${l.croissance}</span>
-                                        </div>
-                                        ${l.reputation ? `<div class="item-desc" style="margin-bottom: 8px;"><strong>Reputation:</strong> ${l.reputation}</div>` : ''}
-                                        ${l.publications ? `<div class="item-desc"><strong>Publications:</strong> ${l.publications}</div>` : ''}
-                                    </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        </div>` : ''}
+                        </div>
                     </div>
+                    ` : ''}
                 </div>
             `;
         }
 
-        function toggleSection(header) {
-            const section = header.parentElement;
-            section.classList.toggle('open');
-        }
-
-        // Event listeners
+        // Event listener
         document.getElementById('companySelect').addEventListener('change', function() {
             const id = parseInt(this.value);
             if (id) {
                 const company = entreprises.find(e => e.id === id);
-                if (company) {
-                    displayCompany(company);
-                }
+                if (company) displayCompany(company);
             } else {
                 document.getElementById('companyContent').innerHTML = `
                     <div class="empty-state">
-                        <i class="fas fa-hand-pointer"></i>
-                        <h3>Selectionnez une entreprise</h3>
-                        <p>Choisissez une entreprise dans la liste pour voir sa fiche complete</p>
+                        <div class="empty-state-icon"><i class="fas fa-building"></i></div>
+                        <h3>Sélectionnez une entreprise</h3>
+                        <p>Choisissez dans la liste pour voir le profil complet</p>
                     </div>
                 `;
             }
         });
 
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            initGrist();
-        });
+        // Init
+        document.addEventListener('DOMContentLoaded', initGrist);
     </script>
 </body>
 </html>
