@@ -718,36 +718,91 @@
         let expertises = [];
         let linkedinInsights = [];
 
-        // Logos des clients connus (mapping)
-        const clientLogos = {
-            'atout france': 'https://www.atout-france.fr/sites/default/files/logo.png',
-            'ministère des armées': 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/85/Minist%C3%A8re_des_Arm%C3%A9es_%28depuis_2020%29.svg/200px-Minist%C3%A8re_des_Arm%C3%A9es_%28depuis_2020%29.svg.png',
-            'ministère de l\'intérieur': 'https://upload.wikimedia.org/wikipedia/fr/thumb/2/29/Minist%C3%A8re_de_l%27Int%C3%A9rieur_%28France%29.svg/200px-Minist%C3%A8re_de_l%27Int%C3%A9rieur_%28France%29.svg.png',
-            'irsn': 'https://upload.wikimedia.org/wikipedia/fr/thumb/d/d3/Logo_IRSN.svg/200px-Logo_IRSN.svg.png',
-            'ratp': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/RATP_2019.svg/200px-RATP_2019.svg.png',
-            'sncf': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo_SNCF_%282011%29.svg/200px-Logo_SNCF_%282011%29.svg.png',
-            'edf': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Logo_EDF_2022.svg/200px-Logo_EDF_2022.svg.png',
-            'la poste': 'https://upload.wikimedia.org/wikipedia/fr/thumb/4/4e/Logo_La_Poste_%282018%29.svg/200px-Logo_La_Poste_%282018%29.svg.png',
-            'veolia': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Veolia_logo.svg/200px-Veolia_logo.svg.png',
-            'région île-de-france': 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6e/Logo_%C3%8Ele-de-France.svg/200px-Logo_%C3%8Ele-de-France.svg.png',
-            'region idf': 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6e/Logo_%C3%8Ele-de-France.svg/200px-Logo_%C3%8Ele-de-France.svg.png',
-            'cnes': 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8e/Logo_CNES.svg/200px-Logo_CNES.svg.png',
-            'police nationale': 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/72/Logo_de_la_Police_nationale_%28France%29.svg/200px-Logo_de_la_Police_nationale_%28France%29.svg.png',
-            'gendarmerie nationale': 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/88/Logo_Gendarmerie_Nationale.svg/200px-Logo_Gendarmerie_Nationale.svg.png',
-            'pass culture': 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7a/Logo_du_Pass_Culture.svg/200px-Logo_du_Pass_Culture.svg.png',
-            'dgsi': 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8c/Logo_DGSI.svg/200px-Logo_DGSI.svg.png',
-            'engie': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Logo_ENGIE.svg/200px-Logo_ENGIE.svg.png',
-            'safran': 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/37/Safran_-_logo_2016.png/200px-Safran_-_logo_2016.png',
-            'total': 'https://upload.wikimedia.org/wikipedia/fr/thumb/f/f5/Logo_TotalEnergies.svg/200px-Logo_TotalEnergies.svg.png',
-            'totalenergies': 'https://upload.wikimedia.org/wikipedia/fr/thumb/f/f5/Logo_TotalEnergies.svg/200px-Logo_TotalEnergies.svg.png',
-            'bnp paribas': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/BNP_Paribas.svg/200px-BNP_Paribas.svg.png',
-            'crédit agricole': 'https://upload.wikimedia.org/wikipedia/fr/thumb/f/f4/Logo_Cr%C3%A9dit_Agricole.svg/200px-Logo_Cr%C3%A9dit_Agricole.svg.png',
-            'air france': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Air_France_Logo.svg/200px-Air_France_Logo.svg.png',
-            'airbus': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Airbus_Logo_2017.svg/200px-Airbus_Logo_2017.svg.png',
-            'orange': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/200px-Orange_logo.svg.png',
-            'health data hub': 'https://www.health-data-hub.fr/sites/default/files/logo.png',
-            'ansm': 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/71/Logo_ANSM.svg/200px-Logo_ANSM.svg.png',
+        // Mapping nom client → domaine pour Clearbit Logo API
+        const clientDomains = {
+            // Secteur public
+            'edf': 'edf.fr',
+            'sncf': 'sncf.com',
+            'ratp': 'ratp.fr',
+            'la poste': 'laposte.fr',
+            'la banque postale': 'labanquepostale.fr',
+            'banque postale': 'labanquepostale.fr',
+            'engie': 'engie.com',
+            'veolia': 'veolia.com',
+            'orange': 'orange.com',
+            'orange business': 'orange-business.com',
+            'orange business services': 'orange-business.com',
+            'cnes': 'cnes.fr',
+            'irsn': 'irsn.fr',
+            'pass culture': 'pass.culture.fr',
+            'atout france': 'atout-france.fr',
+            'health data hub': 'health-data-hub.fr',
+            'cnous': 'cnous.fr',
+            'aprr': 'aprr.fr',
+            'acpr': 'acpr.banque-france.fr',
+            'banque de france': 'banque-france.fr',
+            'arte': 'arte.tv',
+            'cned': 'cned.fr',
+            'université paris': 'u-paris.fr',
+            'paris 2': 'u-paris2.fr',
+            // Ministères et institutions (Clearbit ne les a pas, fallback Wikipedia)
+            'ministère des armées': 'defense.gouv.fr',
+            'ministère de l\'intérieur': 'interieur.gouv.fr',
+            'police nationale': 'police-nationale.interieur.gouv.fr',
+            'gendarmerie nationale': 'gendarmerie.interieur.gouv.fr',
+            'dgsi': 'dgsi.interieur.gouv.fr',
+            'région île-de-france': 'iledefrance.fr',
+            'region idf': 'iledefrance.fr',
+            // Banques et assurances
+            'bnp paribas': 'bnpparibas.com',
+            'bnp': 'bnpparibas.com',
+            'crédit agricole': 'credit-agricole.fr',
+            'credit agricole': 'credit-agricole.fr',
+            'gmf': 'gmf.fr',
+            'groupama': 'groupama.fr',
+            'maaf': 'maaf.fr',
+            'maif': 'maif.fr',
+            'axa': 'axa.fr',
+            'allianz': 'allianz.fr',
+            'societe generale': 'societegenerale.com',
+            'société générale': 'societegenerale.com',
+            // Industrie
+            'total': 'totalenergies.com',
+            'totalenergies': 'totalenergies.com',
+            'safran': 'safran-group.com',
+            'airbus': 'airbus.com',
+            'air france': 'airfrance.fr',
+            'thales': 'thalesgroup.com',
+            'dassault': 'dassault-aviation.com',
+            'renault': 'renault.com',
+            'peugeot': 'peugeot.fr',
+            'stellantis': 'stellantis.com',
+            'michelin': 'michelin.com',
+            'schneider electric': 'se.com',
+            'saint-gobain': 'saint-gobain.com',
+            'l\'oreal': 'loreal.com',
+            'loreal': 'loreal.com',
+            'lvmh': 'lvmh.com',
+            'danone': 'danone.com',
+            'carrefour': 'carrefour.com',
+            'bouygues': 'bouygues.com',
+            'vinci': 'vinci.com',
+            // Tech
+            'capgemini': 'capgemini.com',
+            'atos': 'atos.net',
+            'sopra steria': 'soprasteria.com',
+            'accenture': 'accenture.com',
+            'ibm': 'ibm.com',
+            'microsoft': 'microsoft.com',
+            'google': 'google.com',
+            'amazon': 'amazon.com',
+            'salesforce': 'salesforce.com',
         };
+
+        // Fonction pour obtenir le logo via Clearbit
+        function getClearbitLogo(domain) {
+            return `https://logo.clearbit.com/${domain}`;
+        }
 
         // Config Grist
         let gristDocId = null;
@@ -950,9 +1005,10 @@
 
         function getClientLogo(clientName) {
             const nameLower = clientName.toLowerCase().trim();
-            for (const [key, url] of Object.entries(clientLogos)) {
+            // Chercher dans le mapping des domaines
+            for (const [key, domain] of Object.entries(clientDomains)) {
                 if (nameLower.includes(key) || key.includes(nameLower)) {
-                    return url;
+                    return getClearbitLogo(domain);
                 }
             }
             return null;
