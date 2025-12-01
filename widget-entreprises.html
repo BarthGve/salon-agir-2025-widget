@@ -482,7 +482,7 @@
 
     <script src="https://docs.getgrist.com/grist-plugin-api.js"></script>
     <script>
-        // Donnees des entreprises (sera remplace par les donnees Grist en mode widget)
+        // Donnees des entreprises
         let entreprises = [];
         let solutions = [];
         let clients = [];
@@ -490,41 +490,150 @@
         let expertises = [];
         let linkedinInsights = [];
 
-        // Initialisation Grist
+        // Configuration Grist
+        let gristDocId = null;
+        let gristApiUrl = null;
         let isGristReady = false;
+
+        // Fonction pour charger les donnees d'une table via l'API Grist
+        async function fetchGristTable(tableName) {
+            if (!gristDocId) return [];
+            try {
+                const data = await grist.docApi.fetchTable(tableName);
+                if (!data || !data.id) return [];
+                // Convertir le format colonnes en format lignes
+                const records = [];
+                const numRecords = data.id.length;
+                const columns = Object.keys(data);
+                for (let i = 0; i < numRecords; i++) {
+                    const record = {};
+                    columns.forEach(col => {
+                        record[col] = data[col][i];
+                    });
+                    records.push(record);
+                }
+                return records;
+            } catch (e) {
+                console.log('Erreur chargement table ' + tableName + ':', e);
+                return [];
+            }
+        }
+
+        // Charger toutes les tables Grist
+        async function loadAllGristTables() {
+            console.log('Chargement des tables Grist...');
+
+            // Charger la table principale Entreprises
+            const entreprisesData = await fetchGristTable('Entreprises');
+            if (entreprisesData.length > 0) {
+                entreprises = entreprisesData.map(r => ({
+                    id: r.id,
+                    nom: r.nom || r.Nom || r.A || 'Sans nom',
+                    description: r.Description || '',
+                    siteWeb: r.SiteWeb || '',
+                    logoURL: r.LogoURL || '',
+                    dateCreation: r.DateCreation || '',
+                    effectifs: r.Effectifs || '',
+                    siege: r.Siege || '',
+                    secteur: r.Secteur || '',
+                    ca: r.CA || '',
+                    linkedInURL: r.LinkedInURL || ''
+                }));
+            }
+
+            // Charger Table1 (Solutions_IA)
+            const solutionsData = await fetchGristTable('Table1');
+            if (solutionsData.length > 0) {
+                solutions = solutionsData.map(r => ({
+                    entreprise: r.Entreprise,
+                    nom: r.NomSolution || '',
+                    description: r.Description || '',
+                    type: r.TypeIA || '',
+                    usage: r.CasUsage || ''
+                }));
+            }
+
+            // Charger Table2 (References_Clients)
+            const clientsData = await fetchGristTable('Table2');
+            if (clientsData.length > 0) {
+                clients = clientsData.map(r => ({
+                    entreprise: r.Entreprise,
+                    nom: r.NomClient || '',
+                    secteur: r.Secteur || '',
+                    projet: r.TypeProjet || '',
+                    annee: r.Annee || ''
+                }));
+            }
+
+            // Charger Table3 (Investisseurs)
+            const investisseursData = await fetchGristTable('Table3');
+            if (investisseursData.length > 0) {
+                investisseurs = investisseursData.map(r => ({
+                    entreprise: r.Entreprise,
+                    nom: r.NomInvestisseur || '',
+                    type: r.TypeInvestisseur || '',
+                    montant: r.MontantLevee || '',
+                    date: r.DateLevee || ''
+                }));
+            }
+
+            // Charger Table4 (Expertises)
+            const expertisesData = await fetchGristTable('Table4');
+            if (expertisesData.length > 0) {
+                expertises = expertisesData.map(r => ({
+                    entreprise: r.Entreprise,
+                    domaine: r.Domaine || '',
+                    technologies: r.Technologies || '',
+                    certifications: r.Certifications || ''
+                }));
+            }
+
+            // Charger Table5 (LinkedIn_Insights)
+            const linkedinData = await fetchGristTable('Table5');
+            if (linkedinData.length > 0) {
+                linkedinInsights = linkedinData.map(r => ({
+                    entreprise: r.Entreprise,
+                    nbEmployes: r.NbEmployes || '',
+                    croissance: r.Croissance || '',
+                    publications: r.Publications || '',
+                    reputation: r.Reputation || ''
+                }));
+            }
+
+            console.log('Tables chargees:', {
+                entreprises: entreprises.length,
+                solutions: solutions.length,
+                clients: clients.length,
+                investisseurs: investisseurs.length,
+                expertises: expertises.length,
+                linkedinInsights: linkedinInsights.length
+            });
+
+            populateSelect();
+        }
 
         function initGrist() {
             if (typeof grist !== 'undefined') {
                 grist.ready({
-                    requiredAccess: 'read table'
+                    requiredAccess: 'full'
                 });
 
-                grist.onRecord(function(record) {
-                    if (record) {
+                // Attendre que Grist soit pret puis charger toutes les tables
+                grist.onRecord(async function(record) {
+                    if (!isGristReady) {
                         isGristReady = true;
-                        displayCompanyFromGrist(record);
+                        gristDocId = true; // Flag pour indiquer que nous sommes dans Grist
+                        await loadAllGristTables();
+                    }
+                    if (record && record.id) {
+                        const company = entreprises.find(e => e.id === record.id);
+                        if (company) {
+                            document.getElementById('companySelect').value = company.id;
+                            displayCompany(company);
+                        }
                     }
                 });
 
-                grist.onRecords(function(records) {
-                    if (records && records.length > 0) {
-                        isGristReady = true;
-                        entreprises = records.map((r, i) => ({
-                            id: r.id || i + 1,
-                            nom: r.nom || r.Nom || 'Sans nom',
-                            description: r.Description || '',
-                            siteWeb: r.SiteWeb || '',
-                            logoURL: r.LogoURL || '',
-                            dateCreation: r.DateCreation || '',
-                            effectifs: r.Effectifs || '',
-                            siege: r.Siege || '',
-                            secteur: r.Secteur || '',
-                            ca: r.CA || '',
-                            linkedInURL: r.LinkedInURL || ''
-                        }));
-                        populateSelect();
-                    }
-                });
             } else {
                 // Mode standalone - donnees de demo
                 loadDemoData();
@@ -634,6 +743,8 @@
             const companyClients = clients.filter(c => c.entreprise === company.id);
             const companySolutions = solutions.filter(s => s.entreprise === company.id);
             const companyInvestors = investisseurs.filter(i => i.entreprise === company.id);
+            const companyExpertises = expertises.filter(e => e.entreprise === company.id);
+            const companyLinkedIn = linkedinInsights.filter(l => l.entreprise === company.id);
 
             const logoInitials = company.nom.substring(0, 2).toUpperCase();
             const logoHtml = company.logoURL
@@ -750,6 +861,47 @@
                                         <div class="item-meta">
                                             <span class="tag">${i.type}</span>
                                         </div>
+                                    </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>` : ''}
+
+                        ${companyExpertises.length > 0 ? `
+                        <div class="section">
+                            <div class="section-header" onclick="toggleSection(this)">
+                                <h3><span class="icon expertise"><i class="fas fa-certificate"></i></span> Expertise Technique (${companyExpertises.length})</h3>
+                                <i class="fas fa-chevron-down toggle"></i>
+                            </div>
+                            <div class="section-content">
+                                <div class="section-inner">
+                                    ${companyExpertises.map(e => `
+                                    <div class="item-card">
+                                        <div class="item-title">${e.domaine}</div>
+                                        <div class="item-desc">${e.technologies}</div>
+                                        ${e.certifications ? `<div class="item-meta"><span class="tag"><i class="fas fa-award"></i> ${e.certifications}</span></div>` : ''}
+                                    </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>` : ''}
+
+                        ${companyLinkedIn.length > 0 ? `
+                        <div class="section">
+                            <div class="section-header" onclick="toggleSection(this)">
+                                <h3><span class="icon linkedin"><i class="fab fa-linkedin"></i></span> E-Reputation LinkedIn</h3>
+                                <i class="fas fa-chevron-down toggle"></i>
+                            </div>
+                            <div class="section-content">
+                                <div class="section-inner">
+                                    ${companyLinkedIn.map(l => `
+                                    <div class="item-card">
+                                        <div class="item-meta" style="margin-bottom: 10px;">
+                                            <span class="tag"><i class="fas fa-users"></i> ${l.nbEmployes} employes</span>
+                                            <span class="tag"><i class="fas fa-chart-line"></i> ${l.croissance}</span>
+                                        </div>
+                                        ${l.reputation ? `<div class="item-desc" style="margin-bottom: 8px;"><strong>Reputation:</strong> ${l.reputation}</div>` : ''}
+                                        ${l.publications ? `<div class="item-desc"><strong>Publications:</strong> ${l.publications}</div>` : ''}
                                     </div>
                                     `).join('')}
                                 </div>
