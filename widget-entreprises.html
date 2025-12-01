@@ -922,13 +922,31 @@
             return `https://logo.clearbit.com/${domain}`;
         }
 
-        // Config Grist
-        let gristDocId = null;
-        let isGristReady = false;
+        // Config Grist - API REST publique
+        const GRIST_BASE_URL = 'https://grist.numerique.gouv.fr';
+        const GRIST_DOC_ID = 'qZyF674ZEUb3';
+        let isStandaloneMode = false;
 
-        // Charger une table Grist
-        async function fetchGristTable(tableName) {
-            if (!gristDocId) return [];
+        // Charger une table via l'API REST Grist (mode standalone)
+        async function fetchGristTableREST(tableName) {
+            try {
+                const url = `${GRIST_BASE_URL}/api/docs/${GRIST_DOC_ID}/tables/${tableName}/records`;
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.log(`Erreur API Grist pour ${tableName}: ${response.status}`);
+                    return [];
+                }
+                const data = await response.json();
+                if (!data.records) return [];
+                return data.records.map(r => ({ id: r.id, ...r.fields }));
+            } catch (e) {
+                console.log('Erreur chargement table ' + tableName + ':', e);
+                return [];
+            }
+        }
+
+        // Charger une table via l'API Widget Grist (mode intégré)
+        async function fetchGristTableWidget(tableName) {
             try {
                 const data = await grist.docApi.fetchTable(tableName);
                 if (!data || !data.id) return [];
@@ -946,6 +964,15 @@
             } catch (e) {
                 console.log('Erreur chargement table ' + tableName + ':', e);
                 return [];
+            }
+        }
+
+        // Fonction unifiée pour charger une table (détecte automatiquement le mode)
+        async function fetchGristTable(tableName) {
+            if (isStandaloneMode) {
+                return await fetchGristTableREST(tableName);
+            } else {
+                return await fetchGristTableWidget(tableName);
             }
         }
 
@@ -1025,14 +1052,19 @@
             populateSelect();
         }
 
-        function initGrist() {
-            if (typeof grist !== 'undefined') {
+        async function initGrist() {
+            // Vérifier si on est dans un iframe Grist ou en mode standalone
+            const isInGristIframe = window.self !== window.top && typeof grist !== 'undefined';
+
+            if (isInGristIframe) {
+                // Mode intégré dans Grist
+                isStandaloneMode = false;
                 grist.ready({ requiredAccess: 'full' });
 
+                let gristInitialized = false;
                 grist.onRecord(async function(record) {
-                    if (!isGristReady) {
-                        isGristReady = true;
-                        gristDocId = true;
+                    if (!gristInitialized) {
+                        gristInitialized = true;
                         await loadAllGristTables();
                     }
                     if (record && record.id) {
@@ -1044,7 +1076,20 @@
                     }
                 });
             } else {
-                loadDemoData();
+                // Mode standalone - charger via API REST
+                isStandaloneMode = true;
+                console.log('Mode standalone activé - chargement via API REST Grist');
+
+                try {
+                    await loadAllGristTables();
+                    if (entreprises.length === 0) {
+                        console.log('Aucune donnée Grist - chargement des données de démo');
+                        loadDemoData();
+                    }
+                } catch (e) {
+                    console.log('Erreur chargement Grist, fallback démo:', e);
+                    loadDemoData();
+                }
             }
         }
 
