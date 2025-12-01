@@ -496,19 +496,7 @@
         function initGrist() {
             if (typeof grist !== 'undefined') {
                 grist.ready({
-                    requiredAccess: 'read table',
-                    columns: [
-                        { name: 'nom', title: 'Nom' },
-                        { name: 'Description' },
-                        { name: 'SiteWeb' },
-                        { name: 'LogoURL' },
-                        { name: 'DateCreation' },
-                        { name: 'Effectifs' },
-                        { name: 'Siege' },
-                        { name: 'Secteur' },
-                        { name: 'CA' },
-                        { name: 'LinkedInURL' }
-                    ]
+                    requiredAccess: 'read table'
                 });
 
                 grist.onRecord(function(record) {
