@@ -1018,6 +1018,33 @@
             return name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
         }
 
+        // Extraire le domaine d'une URL pour Clearbit
+        function extractDomain(url) {
+            if (!url) return null;
+            try {
+                const urlObj = new URL(url);
+                return urlObj.hostname.replace('www.', '');
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // Obtenir le logo de l'entreprise via Clearbit (depuis son site web)
+        function getCompanyLogo(company) {
+            // Si un logo spécifique est défini et n'est pas un favicon, l'utiliser
+            if (company.logoURL && !company.logoURL.includes('favicon')) {
+                return company.logoURL;
+            }
+            // Sinon, utiliser Clearbit avec le domaine du site web
+            if (company.siteWeb) {
+                const domain = extractDomain(company.siteWeb);
+                if (domain) {
+                    return getClearbitLogo(domain);
+                }
+            }
+            return null;
+        }
+
         function displayCompany(company) {
             const container = document.getElementById('companyContent');
 
@@ -1027,8 +1054,9 @@
             const companyExpertises = expertises.filter(e => e.entreprise === company.id);
             const companyLinkedIn = linkedinInsights.find(l => l.entreprise === company.id);
 
-            const logoHtml = company.logoURL
-                ? `<img src="${company.logoURL}" alt="${company.nom}" onerror="this.parentElement.innerHTML='<span class=\\'initials\\'>${getInitials(company.nom)}</span>'">`
+            const companyLogoUrl = getCompanyLogo(company);
+            const logoHtml = companyLogoUrl
+                ? `<img src="${companyLogoUrl}" alt="${company.nom}" onerror="this.parentElement.innerHTML='<span class=\\'initials\\'>${getInitials(company.nom)}</span>'">`
                 : `<span class="initials">${getInitials(company.nom)}</span>`;
 
             container.innerHTML = `
