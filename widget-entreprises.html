@@ -804,6 +804,11 @@
             'la poste': 'https://upload.wikimedia.org/wikipedia/fr/thumb/4/4e/Logo_La_Poste_%282018%29.svg/200px-Logo_La_Poste_%282018%29.svg.png',
         };
 
+        // Logos entreprises (quand Clearbit retourne un placeholder)
+        const companyDirectLogos = {
+            'owi': 'https://www.owi-tech.com/wp-content/uploads/2023/03/Logo-OWI-bleu.png',
+        };
+
         // Fonction pour obtenir le logo via Clearbit
         function getClearbitLogo(domain) {
             return `https://logo.clearbit.com/${domain}`;
@@ -1042,6 +1047,15 @@
 
         // Obtenir le logo de l'entreprise via Clearbit (depuis son site web)
         function getCompanyLogo(company) {
+            const nameLower = company.nom.toLowerCase().trim();
+
+            // D'abord vérifier si on a un logo direct pour cette entreprise
+            for (const [key, url] of Object.entries(companyDirectLogos)) {
+                if (nameLower.includes(key) || key.includes(nameLower)) {
+                    return url;
+                }
+            }
+
             // Si un logo spécifique est défini et n'est pas un favicon, l'utiliser
             if (company.logoURL && !company.logoURL.includes('favicon')) {
                 return company.logoURL;
