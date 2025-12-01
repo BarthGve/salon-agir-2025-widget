@@ -498,7 +498,7 @@
                 grist.ready({
                     requiredAccess: 'read table',
                     columns: [
-                        { name: 'A', title: 'Nom' },
+                        { name: 'nom', title: 'Nom' },
                         { name: 'Description' },
                         { name: 'SiteWeb' },
                         { name: 'LogoURL' },
@@ -523,7 +523,7 @@
                         isGristReady = true;
                         entreprises = records.map((r, i) => ({
                             id: r.id || i + 1,
-                            nom: r.A || r.Nom || 'Sans nom',
+                            nom: r.nom || r.Nom || 'Sans nom',
                             description: r.Description || '',
                             siteWeb: r.SiteWeb || '',
                             logoURL: r.LogoURL || '',
@@ -626,7 +626,7 @@
         function displayCompanyFromGrist(record) {
             const company = {
                 id: record.id,
-                nom: record.A || record.Nom || 'Sans nom',
+                nom: record.nom || record.Nom || 'Sans nom',
                 description: record.Description || '',
                 siteWeb: record.SiteWeb || '',
                 logoURL: record.LogoURL || '',
